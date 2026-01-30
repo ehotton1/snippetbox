@@ -1,25 +1,13 @@
 # syntax=docker/dockerfile:1
 
-FROM golang:1.24.12-alpine AS build
+FROM golang:1.24.12
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-COPY go.mod ./
-COPY go.sum ./
+COPY go.mod go.sum .
 RUN go mod download
 
-COPY cmd/ ./cmd/
-#COPY internal/ ./internal/
-COPY ui/ ./ui/
+COPY . .
+RUN go build -v -o /usr/local/bin/app ./... 
 
-RUN go build -o ./bin/web ./cmd/web
-
-FROM gcr.io/distroless/base-debian12
-
-WORKDIR /bin
-
-COPY --from=build /app/bin/web /bin/web
-
-USER nonroot:nonroot
-
-ENTRYPOINT [ "/bin/web" ]
+CMD ["app"]
