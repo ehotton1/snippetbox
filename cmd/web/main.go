@@ -22,7 +22,7 @@ func main() {
 
 	logger.Info("starting server", "addr", *addr)
 
-	err := http.ListenAndServe(*addr, app.routes())
+	err := http.ListenAndServeTLS(*addr, "./tls/cert.pem", "./tls/key.pem", app.routes())
 	logger.Error(err.Error())
 	os.Exit(1)
 }
