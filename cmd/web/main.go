@@ -8,11 +8,18 @@ import (
 	"strings"
 )
 
+type application struct {
+	logger *slog.Logger
+}
+
 func main() {
 	addr := flag.String("addr", ":8080", "HTTP network address")
 	flag.Parse()
 
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
+	app := &application{
+		logger: logger,
+	}
 
 	mux := http.NewServeMux()
 
