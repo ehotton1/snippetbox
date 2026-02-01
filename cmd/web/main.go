@@ -7,11 +7,14 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/ehotton1/snippetbox/internal/models"
+
 	_ "github.com/go-sql-driver/mysql"
 )
 
 type application struct {
-	logger *slog.Logger
+	logger   *slog.Logger
+	snippets *models.SnippetModel
 }
 
 func main() {
@@ -33,7 +36,8 @@ func main() {
 	defer db.Close()
 
 	app := &application{
-		logger: logger,
+		logger:   logger,
+		snippets: &models.SnippetModel{DB: db},
 	}
 
 	logger.Info("starting server", "addr", *addr)
