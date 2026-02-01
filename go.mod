@@ -1,6 +1,6 @@
 module github.com/ehotton1/snippetbox
 
-go 1.24.12
+go 1.25.6
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
